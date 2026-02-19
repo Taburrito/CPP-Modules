@@ -1,38 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   ICharacter.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 16:55:49 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/18 16:56:55 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:05:44 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CAT_H__
-#define __CAT_H__
+#ifndef __ICHARACTER_H__
+#define __ICHARACTER_H__
 
-# include "Animal.hpp"
-# include "Brain.hpp"
+# include "AMateria.hpp"
 
 // ************************************************************************** //
-//                               Cat Class                                  //
+//                           ICharacter Class                                 //
 // ************************************************************************** //
 
-class Cat : public Animal
+class ICharacter
 {
 
 public:
-	Cat(void);
-	~Cat(void);
-	Cat(const Cat &other);
-	Cat &operator=(const Cat &rhs);
-
-	void	makeSound(void) const;
-
-private:
-	Brain*	_brain;
+	ICharacter(void);
+	ICharacter(std::string name);
+	ICharacter(const ICharacter &src);
+	ICharacter &operator=(const ICharacter &rhs);
+	virtual ~ICharacter(void) {};
+	virtual std::string const & getName(void) const = 0;
+	virtual void equip(AMateria* m) = 0;
+	virtual void unequip(int idx) = 0;
+	virtual void use(int idx, ICharacter& target) = 0;
+protected:
+	AMateria*	_inventory[4];
+	int			_index;
+	std::string	_name;
+	AMateria*	_floor[50];
+	int			_floor_index;
 };
 
 #endif

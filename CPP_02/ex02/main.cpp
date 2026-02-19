@@ -6,7 +6,7 @@
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:32:22 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/05 17:47:38 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/19 15:20:03 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int main(void) {
 	Fixed c(42.42f);
 	Fixed d(b);
 
+	std::cout << std::endl;
 	std::cout << "Comparaisons:" << std::endl;
 	std::cout << "10 < 20 : " << (aa < bb) << std::endl;
 	std::cout << "10 > 20 : " << (aa > bb) << std::endl;

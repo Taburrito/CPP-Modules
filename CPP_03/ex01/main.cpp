@@ -6,7 +6,7 @@
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:32:22 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/12 17:04:41 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/19 15:28:53 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main( void )
 	std::cout << "Activating Guard Gate mode:" << std::endl;
 	scavy.guardGate();
 
-	std::cout << std::endl << BOLDYELLOW << "--- STEP %: COPY TEST ---" << RESET << std::endl;
+	std::cout << std::endl << BOLDYELLOW << "--- STEP 5: COPY TEST ---" << RESET << std::endl;
 	{
 		std::cout << "Creating a copy inside a scope..." << std::endl;
 		ScavTrap copy = scavy;

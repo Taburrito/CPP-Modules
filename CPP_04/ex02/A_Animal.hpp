@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   A_Animal.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 16:55:49 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/18 16:56:55 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:05:44 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CAT_H__
-#define __CAT_H__
+#ifndef __A_ANIMAL_H__
+#define __A_ANIMAL_H__
 
-# include "Animal.hpp"
-# include "Brain.hpp"
+# include <iostream>
+# include <string>
 
 // ************************************************************************** //
-//                               Cat Class                                  //
+//                               A_Animal Class                                  //
 // ************************************************************************** //
 
-class Cat : public Animal
+class A_Animal
 {
 
 public:
-	Cat(void);
-	~Cat(void);
-	Cat(const Cat &other);
-	Cat &operator=(const Cat &rhs);
+	A_Animal(void);
+	A_Animal(std::string type);
+	virtual ~A_Animal(void);
+	A_Animal(const A_Animal &other);
+	A_Animal &operator=(const A_Animal &rhs);
 
-	void	makeSound(void) const;
+	std::string		getType(void) const;
 
-private:
-	Brain*	_brain;
+	virtual void	makeSound(void) const = 0;
+protected:
+	std::string				_type;
 };
 
 #endif

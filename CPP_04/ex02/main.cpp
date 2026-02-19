@@ -6,19 +6,19 @@
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:32:22 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/19 14:34:28 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:28:16 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#include "Dog.hpp"
+#include "Cat.hpp"
+#include "WrongCat.hpp"
+#include "Colors.hpp"
 
-int	main(void)
+int main()
 {
-	int n = 10000;
-	Zombie	*myguys = zombieHorde(n, "Maati");
-	for (int i = 0; i < n; i++)
-		myguys[i].announce();
-	delete[] myguys;
-
-	return (0);
+	// A_Animal* test = new A_Animal;
+	A_Animal* dog = new Dog;
+	dog->makeSound();
+	return 0;
 }

@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   AMateria.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 16:55:49 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/18 16:56:55 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:05:44 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CAT_H__
-#define __CAT_H__
+#ifndef __AMATERIA_H__
+#define __AMATERIA_H__
 
-# include "Animal.hpp"
-# include "Brain.hpp"
+# include <iostream>
+# include <string>
+# include "ICharacter.hpp"
 
 // ************************************************************************** //
-//                               Cat Class                                  //
+//                               AMateria Class                                  //
 // ************************************************************************** //
 
-class Cat : public Animal
+class AMateria
 {
 
 public:
-	Cat(void);
-	~Cat(void);
-	Cat(const Cat &other);
-	Cat &operator=(const Cat &rhs);
+	AMateria(void);
+	AMateria(std::string const & type);
+	virtual ~AMateria(void);
+	AMateria(const AMateria &other);
+	AMateria &operator=(const AMateria &rhs);
 
-	void	makeSound(void) const;
+	std::string const &		getType(void) const;
 
-private:
-	Brain*	_brain;
+	virtual AMateria* clone(void) const = 0;
+	virtual void use(ICharacter& target);
+protected:
+	std::string				_type;
 };
 
 #endif

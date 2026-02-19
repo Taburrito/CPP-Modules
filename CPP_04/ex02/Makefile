@@ -6,7 +6,7 @@ CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 SRCDIR		= ./
 OBJDIR		= obj
 
-SRCS		=	Animal.cpp		\
+SRCS		=	A_Animal.cpp		\
 				Dog.cpp			\
 				Cat.cpp			\
 				WrongAnimal.cpp	\

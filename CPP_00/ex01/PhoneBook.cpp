@@ -6,7 +6,7 @@
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 11:56:13 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/01/16 14:39:10 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/18 12:23:47 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void PhoneBook::add_contact(void)
 	while (true){
 		std::cout << "-- Please enter new contact's firt name --" << std::endl;
 		std::cout << "> ";
-		std::getline(std::cin, temp);
+		if (!std::getline(std::cin, temp))
+			break;
 		if (valid_contact_input(temp) == EXIT_SUCCESS)
 			break;
 	}
@@ -66,7 +67,8 @@ void PhoneBook::add_contact(void)
 	while (true){
 		std::cout << "-- Please enter new contact's last name --" << std::endl;
 		std::cout << "> ";
-		std::getline(std::cin, temp);
+		if(!std::getline(std::cin, temp))
+			break;
 		if (valid_contact_input(temp) == EXIT_SUCCESS)
 			break;
 	}
@@ -75,7 +77,8 @@ void PhoneBook::add_contact(void)
 	while (true){
 		std::cout << "-- Please enter new contact's nickname --" << std::endl;
 		std::cout << "> ";
-		std::getline(std::cin, temp);
+		if (!std::getline(std::cin, temp))
+			break;
 		if (valid_contact_input(temp) == EXIT_SUCCESS)
 			break;
 	}
@@ -84,7 +87,8 @@ void PhoneBook::add_contact(void)
 	while (true){
 		std::cout << "-- Please enter new contact's phone number --" << std::endl;
 		std::cout << "> ";
-		std::getline(std::cin, temp);
+		if (!std::getline(std::cin, temp))
+			break;
 		if (valid_contact_input(temp) == EXIT_SUCCESS)
 			break;
 	}
@@ -93,7 +97,8 @@ void PhoneBook::add_contact(void)
 	while (true){
 		std::cout << "-- Please enter new contact's darkest secret --" << std::endl;
 		std::cout << "> ";
-		std::getline(std::cin, temp);
+		if(!std::getline(std::cin, temp))
+			break;
 		if (valid_contact_input(temp) == EXIT_SUCCESS)
 			break;
 	}
@@ -159,7 +164,8 @@ void	PhoneBook::search_for_contact(void)
 	std::cout << std::endl << "-- Please enter the index of the contact to get their informations --" << std::endl;
 	while (true){
 		std::cout << "> ";
-		std::getline(std::cin, temp_prompt);
+		if(!std::getline(std::cin, temp_prompt))
+			break;
 		if (temp_prompt.length() != 1 || temp_prompt[0] < '1' || temp_prompt[0] > '8' || (temp_prompt[0] > '0' + this->index && this->index <= 8))
 			std::cout << "Invalid entry: please write within the possible scope" << std::endl;
 		else

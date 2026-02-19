@@ -6,7 +6,7 @@
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:32:22 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/17 16:46:09 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/18 12:38:08 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main()
 			animals[i] = new Cat();
 	}
 
-	std::cout << BOLDYELLOW << "--- TEST 2: DEEP COPY PROOF ---" << RESET << std::endl;
+	std::cout << std::endl << BOLDYELLOW << "--- TEST 2: DEEP COPY PROOF ---" << RESET << std::endl;
 
 	Dog basic;
 	{
@@ -39,6 +39,9 @@ int main()
 
 	std::cout << GREEN << "Une shallow copy aurait fait crash le prog" << RESET << std::endl;
 
-	
+	std::cout << std::endl << BOLDYELLOW << "--- TEST 3: DELETING ARRAY ---" << RESET << std::endl;
+	for (int i =0; i < count; i++)
+		delete animals[i];
+
 	return 0;
 }

@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*   Cure.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 16:55:49 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/18 16:56:55 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/18 17:06:58 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __CAT_H__
-#define __CAT_H__
+#ifndef __CURE_H__
+#define __CURE_H__
 
-# include "Animal.hpp"
-# include "Brain.hpp"
+# include "AMateria.hpp"
 
 // ************************************************************************** //
-//                               Cat Class                                  //
+//                               Cure Class                                    //
 // ************************************************************************** //
 
-class Cat : public Animal
+class Cure : public AMateria
 {
 
 public:
-	Cat(void);
-	~Cat(void);
-	Cat(const Cat &other);
-	Cat &operator=(const Cat &rhs);
+	Cure(void);
+	~Cure(void);
+	Cure(const Cure &other);
+	Cure &operator=(const Cure &rhs);
 
-	void	makeSound(void) const;
+	AMateria* clone(void) const;
 
 private:
-	Brain*	_brain;
+
 };
 
 #endif
