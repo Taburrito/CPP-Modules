@@ -1,56 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AMateria.cpp                                         :+:      :+:    :+:   */
+/*   Cure.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 16:55:45 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/17 12:30:34 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:32:09 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "AMateria.hpp"
+#include "Cure.hpp"
 
-void AMateria::use(ICharacter& target)
+AMateria* Cure::clone(void) const
 {
-	std::cout << "* ??? attacks " << target.getName() << " with ???" << std::endl;
+	return (new Cure);
+}
+
+void Cure::use(ICharacter& target)
+{
+	std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
 	return;
 }
+
 // ************************************************************************** //
 //                           Const/Dest/Copy/Assign                           //
 // ************************************************************************** //
 
-AMateria::AMateria(void) : _type("Amalgame")
+Cure::Cure(void) : AMateria("Cure")
 {
-	std::cout << "AMateria default constructor called" << std::endl;
+	std::cout << "Cure default constructor called" << std::endl;
 	return;
 }
 
-AMateria::AMateria(std::string const & type) : _type(type)
+Cure::~Cure(void)
 {
-	std::cout << "AMateria type constructor called, it's a " << type << "!" << std::endl;
+	std::cout << "Cure destructor called" << std::endl;
 	return;
 }
 
-AMateria::~AMateria(void)
+Cure::Cure(const Cure &src) : AMateria(src)
 {
-	std::cout << "AMateria destructor called" << std::endl;
+	std::cout << "Cure copy constructor called" << std::endl;
 	return;
 }
 
-AMateria::AMateria(const AMateria &src)
+Cure	&Cure::operator=(const Cure &rhs)
 {
-	std::cout << "AMateria copy constructor called" << std::endl;
-	*this = src;
-}
-
-AMateria	&AMateria::operator=(const AMateria &rhs)
-{
-	std::cout << "AMateria assignment overload called" << std::endl;
+	std::cout << "Cure assignment overload called" << std::endl;
 	if (this != &rhs)
 	{
-		this->_type = rhs._type;
+		AMateria::operator=(rhs);
 	}
 	return (*this);
 }

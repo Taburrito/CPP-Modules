@@ -1,37 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Ice.hpp                                            :+:      :+:    :+:   */
+/*   IMateriaSource.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 16:55:49 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/21 15:31:04 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/18 15:05:44 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __ICE_H__
-#define __ICE_H__
+#ifndef __IMATERIASOURCE_H__
+#define __IMATERIASOURCE_H__
 
 # include "AMateria.hpp"
 
 // ************************************************************************** //
-//                               Ice Class                                    //
+//                               IMateriaSource Class                                  //
 // ************************************************************************** //
 
-class Ice : public AMateria
+class IMateriaSource
 {
 
 public:
-	Ice(void);
-	~Ice(void);
-	Ice(const Ice &other);
-	Ice &operator=(const Ice &rhs);
+	IMateriaSource(void);
+	virtual ~IMateriaSource(void);
+	IMateriaSource(const IMateriaSource &other);
+	IMateriaSource &operator=(const IMateriaSource &rhs);
 
-	AMateria* clone(void) const;
-	void use(ICharacter& target);
-private:
+	virtual void learnMateria(AMateria* m) = 0;
+	virtual AMateria* createMateria(std::string const & type) = 0;
 
+protected:
+	AMateria*	_materia;
 };
+
 
 #endif

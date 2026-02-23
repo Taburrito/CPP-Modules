@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AMateria.cpp                                         :+:      :+:    :+:   */
+/*   IMateriaSource.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,47 +10,49 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "AMateria.hpp"
+#include "IMateriaSource.hpp"
 
-void AMateria::use(ICharacter& target)
+
+void IMateriaSource::learnMateria(AMateria* m)
 {
-	std::cout << "* ??? attacks " << target.getName() << " with ???" << std::endl;
+	std::cout << "Materia Source stores " << m->getType() << " blueprint" << std::endl;
+	_materia = m;
 	return;
 }
+
+AMateria* IMateriaSource::createMateria(std::string const & type)
+{
+	return (new AMateria(type));
+}
+
 // ************************************************************************** //
 //                           Const/Dest/Copy/Assign                           //
 // ************************************************************************** //
 
-AMateria::AMateria(void) : _type("Amalgame")
+IMateriaSource::IMateriaSource(void)
 {
-	std::cout << "AMateria default constructor called" << std::endl;
+	std::cout << "IMateriaSource default constructor called" << std::endl;
 	return;
 }
 
-AMateria::AMateria(std::string const & type) : _type(type)
+IMateriaSource::~IMateriaSource(void)
 {
-	std::cout << "AMateria type constructor called, it's a " << type << "!" << std::endl;
+	std::cout << "IMateriaSource destructor called" << std::endl;
 	return;
 }
 
-AMateria::~AMateria(void)
+IMateriaSource::IMateriaSource(const IMateriaSource &src)
 {
-	std::cout << "AMateria destructor called" << std::endl;
-	return;
-}
-
-AMateria::AMateria(const AMateria &src)
-{
-	std::cout << "AMateria copy constructor called" << std::endl;
+	std::cout << "IMateriaSource copy constructor called" << std::endl;
 	*this = src;
 }
 
-AMateria	&AMateria::operator=(const AMateria &rhs)
+IMateriaSource	&IMateriaSource::operator=(const IMateriaSource &rhs)
 {
-	std::cout << "AMateria assignment overload called" << std::endl;
+	std::cout << "IMateriaSource assignment overload called" << std::endl;
 	if (this != &rhs)
 	{
-		this->_type = rhs._type;
+		this->_materia = rhs._materia;
 	}
 	return (*this);
 }

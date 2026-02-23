@@ -76,6 +76,9 @@ ICharacter::ICharacter(std::string name) : _name(name)
 ICharacter::~ICharacter(void)
 {
 	std::cout << "ICharacter destructor called" << std::endl;
+	for (int i = 0; i < 4; i++)
+		if (_inventory[i])
+			delete (_inventory[i]);
 	return;
 }
 
@@ -83,6 +86,11 @@ ICharacter::ICharacter(const ICharacter &src)
 {
 	std::cout << "ICharacter copy constructor called" << std::endl;
 	*this = src;
+	for (int i = 0; i < _index; i++)
+	{
+		delete this->_inventory[i];
+		this->_inventory[i] = src._inventory[i];
+	}
 }
 
 ICharacter	&ICharacter::operator=(const ICharacter &rhs)
@@ -93,7 +101,7 @@ ICharacter	&ICharacter::operator=(const ICharacter &rhs)
 		this->_name = rhs._name;
 		this->_index = rhs._index;
 		for (int i = 0; i < _index; i++)
-			this->_inventory[i] = rhs._inventory[i];
+			*rhs._inventory[i] = *this->_inventory[i];
 	}
 	return (*this);
 }

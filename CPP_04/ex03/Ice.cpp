@@ -6,7 +6,7 @@
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 16:55:45 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/19 13:56:10 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:32:09 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 AMateria* Ice::clone(void) const
 {
 	return (new Ice);
+}
+
+void Ice::use(ICharacter& target)
+{
+	std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
+	return;
 }
 
 // ************************************************************************** //

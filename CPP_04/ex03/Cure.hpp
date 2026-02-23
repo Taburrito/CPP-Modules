@@ -6,7 +6,7 @@
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 16:55:49 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/02/18 17:06:58 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/21 15:34:41 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
 	Cure &operator=(const Cure &rhs);
 
 	AMateria* clone(void) const;
-
+	void use(ICharacter& target);
 private:
 
 };

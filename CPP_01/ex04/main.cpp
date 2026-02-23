@@ -6,7 +6,7 @@
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:32:22 by awaegaer          #+#    #+#             */
-/*   Updated: 2026/01/28 17:02:25 by awaegaer         ###   ########.fr       */
+/*   Updated: 2026/02/23 14:16:57 by awaegaer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	main(int argc, char **argv)
 	std::size_t			pos = 0;
 	while ((pos = file_content.find(s1, pos)) != std::string::npos)
 	{
-		file_content.replace(pos, s1.length(), s2);
+		file_content.erase(pos, s1.length());
+		file_content.insert(pos, s2);
 		pos += s2.length();
 	}
 	outfile_stream << file_content;
