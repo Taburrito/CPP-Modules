@@ -15,11 +15,12 @@
 
 # include <iostream>
 # include <string>
-# include "ICharacter.hpp"
 
 // ************************************************************************** //
 //                               AMateria Class                                  //
 // ************************************************************************** //
+
+class ICharacter;
 
 class AMateria
 {

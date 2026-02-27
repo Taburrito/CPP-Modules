@@ -23,16 +23,9 @@ class IMateriaSource
 {
 
 public:
-	IMateriaSource(void);
 	virtual ~IMateriaSource(void);
-	IMateriaSource(const IMateriaSource &other);
-	IMateriaSource &operator=(const IMateriaSource &rhs);
-
 	virtual void learnMateria(AMateria* m) = 0;
 	virtual AMateria* createMateria(std::string const & type) = 0;
-
-protected:
-	AMateria*	_materia;
 };
 
 

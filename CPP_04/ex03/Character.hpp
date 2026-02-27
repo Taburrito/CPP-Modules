@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ICharacter.hpp                                         :+:      :+:    :+:   */
+/*   Character.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,24 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __ICHARACTER_H__
-#define __ICHARACTER_H__
+#ifndef __CHARACTER_H__
+#define __CHARACTER_H__
 
-# include "AMateria.hpp"
+# include "ICharacter.hpp"
 
 // ************************************************************************** //
-//                           ICharacter Class                                 //
+//                           Character Class                                 //
 // ************************************************************************** //
 
-class ICharacter
+class Character : public ICharacter
 {
 
 public:
-	virtual ~ICharacter(void) {};
-	virtual std::string const & getName(void) const = 0;
-	virtual void equip(AMateria* m) = 0;
-	virtual void unequip(int idx) = 0;
-	virtual void use(int idx, ICharacter& target) = 0;
+	Character(void);
+	Character(std::string name);
+	Character(const Character &src);
+	Character &operator=(const Character &rhs);
+	~Character(void) {};
+	std::string const & getName(void) const;
+	void equip(AMateria* m);
+	void unequip(int idx);
+	void use(int idx, Character& target);
+private:
+	AMateria*	_inventory[4];
+	int			_index;
+	std::string	_name;
+	struct		_floor {
+		AMateria*	materia;
+		_floor*		next;
+	};
+	_floor*		_floornode;
 };
 
 #endif

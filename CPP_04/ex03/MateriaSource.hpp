@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ICharacter.hpp                                         :+:      :+:    :+:   */
+/*   MateriaSource.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,24 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __ICHARACTER_H__
-#define __ICHARACTER_H__
+#ifndef __MATERIASOURCE_H__
+#define __MATERIASOURCE_H__
 
-# include "AMateria.hpp"
+# include "IMateriaSource.hpp"
 
 // ************************************************************************** //
-//                           ICharacter Class                                 //
+//                               MateriaSource Class                                  //
 // ************************************************************************** //
 
-class ICharacter
+class MateriaSource : public IMateriaSource
 {
 
 public:
-	virtual ~ICharacter(void) {};
-	virtual std::string const & getName(void) const = 0;
-	virtual void equip(AMateria* m) = 0;
-	virtual void unequip(int idx) = 0;
-	virtual void use(int idx, ICharacter& target) = 0;
+	MateriaSource(void);
+	virtual ~MateriaSource(void);
+	MateriaSource(const MateriaSource &other);
+	MateriaSource &operator=(const MateriaSource &rhs);
+
+	virtual void learnMateria(AMateria* m);
+	virtual AMateria* createMateria(std::string const & type);
+
+private:
+	AMateria*	_materia;
+	AMateria*	_inventory[4];
+	int			_index;
 };
+
 
 #endif

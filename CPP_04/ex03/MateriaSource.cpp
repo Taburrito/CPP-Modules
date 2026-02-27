@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   IMateriaSource.cpp                                         :+:      :+:    :+:   */
+/*   MateriaSource.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,46 +10,62 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "IMateriaSource.hpp"
+#include "MateriaSource.hpp"
 
 
-void IMateriaSource::learnMateria(AMateria* m)
+void MateriaSource::learnMateria(AMateria* m)
 {
-	std::cout << "Materia Source stores " << m->getType() << " blueprint" << std::endl;
-	_materia = m;
+	if (_index < 4)
+	{
+		_inventory[_index++] = m;
+		std::cout << "Materia Source stores " << m->getType() << " blueprint" << std::endl;
+	}
+	else
+		std::cout << "Materia Source is full" << std::endl;
 	return;
 }
 
-AMateria* IMateriaSource::createMateria(std::string const & type)
+AMateria* MateriaSource::createMateria(std::string const & type)
 {
-	return (new AMateria(type));
+	for (int i = 0; i < _index; i++)
+	{
+		if (_inventory[i]->getType() == type)
+			return (_inventory[i]->clone());
+	}
+	return NULL;
 }
 
 // ************************************************************************** //
 //                           Const/Dest/Copy/Assign                           //
 // ************************************************************************** //
 
-IMateriaSource::IMateriaSource(void)
+MateriaSource::MateriaSource(void)
 {
-	std::cout << "IMateriaSource default constructor called" << std::endl;
+	_index = 0;
+	for (int i = 0; i < 4; i++)
+		_inventory[i] = NULL;
+	std::cout << "MateriaSource default constructor called" << std::endl;
 	return;
 }
 
-IMateriaSource::~IMateriaSource(void)
+MateriaSource::~MateriaSource(void)
 {
-	std::cout << "IMateriaSource destructor called" << std::endl;
+	for (int i = 0; i < 4; i++)
+		if (_inventory[i])
+			delete _inventory[i];
+	std::cout << "MateriaSource destructor called" << std::endl;
 	return;
 }
 
-IMateriaSource::IMateriaSource(const IMateriaSource &src)
+MateriaSource::MateriaSource(const MateriaSource &src)
 {
-	std::cout << "IMateriaSource copy constructor called" << std::endl;
+	std::cout << "MateriaSource copy constructor called" << std::endl;
 	*this = src;
 }
 
-IMateriaSource	&IMateriaSource::operator=(const IMateriaSource &rhs)
+MateriaSource	&MateriaSource::operator=(const MateriaSource &rhs)
 {
-	std::cout << "IMateriaSource assignment overload called" << std::endl;
+	std::cout << "MateriaSource assignment overload called" << std::endl;
 	if (this != &rhs)
 	{
 		this->_materia = rhs._materia;

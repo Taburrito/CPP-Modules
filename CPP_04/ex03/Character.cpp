@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ICharacter.cpp                                         :+:      :+:    :+:   */
+/*   Character.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ICharacter.hpp"
+#include "Character.hpp"
 
-void ICharacter::equip(AMateria* m)
+void Character::equip(AMateria* m)
 {
 	if (_index < 4)
 	{
@@ -23,7 +23,7 @@ void ICharacter::equip(AMateria* m)
 		std::cout << "Inventory full" << std::endl;
 	return;
 }
-void ICharacter::unequip(int idx)
+void Character::unequip(int idx)
 {
 	if (idx < 0 || idx > 3)
 	{
@@ -32,16 +32,19 @@ void ICharacter::unequip(int idx)
 	}
 	else if (_inventory[idx])
 	{
-		_floor[_floor_index] = _inventory[idx];
+		_floor* newnode = new _floor;
+		newnode->materia = _inventory[idx];
+		newnode->next = _floornode;
+		_floornode = newnode;
 		_inventory[idx] = NULL;
-		std::cout << _floor[_floor_index++]->getType() << " has been unequiped" << std::endl;
+		std::cout << _floornode->next->materia->getType() << " has been unequiped" << std::endl;
 		return;
 	}
 	std::cout << "You don't have anything equiped on this slot" << std::endl;
 	return;
 }
 
-void ICharacter::use(int idx, ICharacter& target)
+void Character::use(int idx, Character& target)
 {
 	if (idx < 0 || idx > 3)
 	{
@@ -61,47 +64,70 @@ void ICharacter::use(int idx, ICharacter& target)
 //                           Const/Dest/Copy/Assign                           //
 // ************************************************************************** //
 
-ICharacter::ICharacter(void) : _index(0), _floor_index(0)
+Character::Character(void) : _index(0), _floornode(NULL)
 {
-	std::cout << "ICharacter default constructor called" << std::endl;
+	for (int i = 0; i < 4; i++)
+		_inventory[i] = NULL;
+	std::cout << "Character default constructor called" << std::endl;
 	return;
 }
 
-ICharacter::ICharacter(std::string name) : _name(name)
+Character::Character(std::string name) : _name(name), _index(0), _floornode(NULL)
 {
-	std::cout << "ICharacter type constructor called, character's name is " << name << "!" << std::endl;
+	for (int i = 0; i < 4; i++)
+		_inventory[i] = NULL;
+	std::cout << "Character type constructor called, character's name is " << name << "!" << std::endl;
 	return;
 }
 
-ICharacter::~ICharacter(void)
+Character::~Character(void)
 {
-	std::cout << "ICharacter destructor called" << std::endl;
+	_floor* temp = _floornode;
+
+	std::cout << "Character destructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
 		if (_inventory[i])
 			delete (_inventory[i]);
+	while (_floornode && _floornode->next)
+	{
+		_floornode = _floornode->next;
+		delete temp;
+		temp = _floornode;
+	}
+	if (_floornode)
+	delete _floornode;
 	return;
 }
 
-ICharacter::ICharacter(const ICharacter &src)
+Character::Character(const Character &src)
 {
-	std::cout << "ICharacter copy constructor called" << std::endl;
+	std::cout << "Character copy constructor called" << std::endl;
 	*this = src;
 	for (int i = 0; i < _index; i++)
 	{
-		delete this->_inventory[i];
-		this->_inventory[i] = src._inventory[i];
+		if (this->_inventory[i])
+			delete this->_inventory[i];
+		if (src._inventory[i])
+			this->_inventory[i] = src._inventory[i]->clone();
+		else
+			this->_inventory[i] = NULL;
 	}
 }
 
-ICharacter	&ICharacter::operator=(const ICharacter &rhs)
+Character	&Character::operator=(const Character &rhs)
 {
-	std::cout << "ICharacter assignment overload called" << std::endl;
+	std::cout << "Character assignment overload called" << std::endl;
 	if (this != &rhs)
 	{
 		this->_name = rhs._name;
 		this->_index = rhs._index;
 		for (int i = 0; i < _index; i++)
-			*rhs._inventory[i] = *this->_inventory[i];
+		{
+			if (rhs._inventory[i])
+				this->_inventory[i] = rhs._inventory[i]->clone();
+			else
+				this->_inventory[i] = NULL;
+		}
 	}
 	return (*this);
 }
@@ -110,7 +136,7 @@ ICharacter	&ICharacter::operator=(const ICharacter &rhs)
 //                                 Gets/Sets                                  //
 // ************************************************************************** //
 
-std::string const & ICharacter::getName(void) const
+std::string const & Character::getName(void) const
 {
 	return(_name);
 }
