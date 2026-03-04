@@ -1,4 +1,4 @@
-NAME		= Polymorphism
+NAME		= I_dont_want_to_set_the_world_on_fire
 
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98

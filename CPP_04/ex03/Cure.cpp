@@ -27,7 +27,7 @@ void Cure::use(ICharacter& target)
 //                           Const/Dest/Copy/Assign                           //
 // ************************************************************************** //
 
-Cure::Cure(void) : AMateria("Cure")
+Cure::Cure(void) : AMateria("cure")
 {
 	std::cout << "Cure default constructor called" << std::endl;
 	return;

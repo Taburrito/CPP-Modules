@@ -15,13 +15,19 @@
 
 void MateriaSource::learnMateria(AMateria* m)
 {
+	if (!m)
+		return;
+
 	if (_index < 4)
 	{
 		_inventory[_index++] = m;
 		std::cout << "Materia Source stores " << m->getType() << " blueprint" << std::endl;
 	}
 	else
+	{
 		std::cout << "Materia Source is full" << std::endl;
+		delete m;
+	}
 	return;
 }
 
@@ -60,6 +66,8 @@ MateriaSource::~MateriaSource(void)
 MateriaSource::MateriaSource(const MateriaSource &src)
 {
 	std::cout << "MateriaSource copy constructor called" << std::endl;
+	for (int i = 0; i < 4; i++)
+		this->_inventory[i] = NULL;
 	*this = src;
 }
 
@@ -68,7 +76,16 @@ MateriaSource	&MateriaSource::operator=(const MateriaSource &rhs)
 	std::cout << "MateriaSource assignment overload called" << std::endl;
 	if (this != &rhs)
 	{
-		this->_materia = rhs._materia;
+		this->_index = rhs._index;
+		for (int i = 0; i < 4; i++)
+		{
+			if (this->_inventory[i])
+				delete this->_inventory[i];
+			if (rhs._inventory[i])
+				this->_inventory[i] = rhs._inventory[i]->clone();
+			else
+				this->_inventory[i] = NULL;
+		}
 	}
 	return (*this);
 }

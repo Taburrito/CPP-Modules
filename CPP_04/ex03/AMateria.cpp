@@ -14,6 +14,7 @@
 
 void AMateria::use(ICharacter& target)
 {
+	(void) target;
 	std::cout << "* ??? attacks with ???" << std::endl;
 	return;
 }
@@ -47,6 +48,7 @@ AMateria::AMateria(const AMateria &src)
 
 AMateria	&AMateria::operator=(const AMateria &rhs)
 {
+	(void) rhs;
 	std::cout << "AMateria assignment overload called" << std::endl;
 	return (*this);
 }
@@ -55,4 +57,7 @@ AMateria	&AMateria::operator=(const AMateria &rhs)
 //                                 Gets/Sets                                  //
 // ************************************************************************** //
 
-
+std::string const &	AMateria::getType(void) const
+{
+	return (this->_type);
+}

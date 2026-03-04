@@ -1,4 +1,4 @@
-NAME		= abstract_class
+NAME		= interface_n_recap
 
 CXX			= c++
 CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
@@ -6,13 +6,12 @@ CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 SRCDIR		= ./
 OBJDIR		= obj
 
-SRCS		=	A_Animal.cpp		\
-				Dog.cpp			\
-				Cat.cpp			\
-				WrongAnimal.cpp	\
-				WrongCat.cpp	\
-				main.cpp		\
-				Brain.cpp		\
+SRCS		=	AMateria.cpp		\
+				Character.cpp		\
+				Cure.cpp			\
+				Ice.cpp				\
+				main.cpp			\
+				MateriaSource.cpp	\
 
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 

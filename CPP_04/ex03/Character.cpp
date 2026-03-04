@@ -14,13 +14,26 @@
 
 void Character::equip(AMateria* m)
 {
-	if (_index < 4)
+	if (!m)
+		return;
+	for (int i = 0; i < 4; i++)
 	{
-		_inventory[_index] = m;
-		std::cout << _inventory[_index]->getType() << " has been added to your " << _index++ << " slot" << std::endl;
+		if (_inventory[i] && _inventory[i] == m)
+		{
+			std::cout << "Materia already in inventory" << std::endl;
+			return;
+		}
 	}
-	else
-		std::cout << "Inventory full" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		if (!_inventory[i])
+		{
+			_inventory[i] = m;
+			std::cout << _inventory[i]->getType() << " has been added to your " << i << " slot" << std::endl;
+			return;
+		}
+	}
+	std::cout << "Inventory full" << std::endl;
 	return;
 }
 void Character::unequip(int idx)
@@ -44,7 +57,7 @@ void Character::unequip(int idx)
 	return;
 }
 
-void Character::use(int idx, Character& target)
+void Character::use(int idx, ICharacter& target)
 {
 	if (idx < 0 || idx > 3)
 	{
@@ -64,7 +77,7 @@ void Character::use(int idx, Character& target)
 //                           Const/Dest/Copy/Assign                           //
 // ************************************************************************** //
 
-Character::Character(void) : _index(0), _floornode(NULL)
+Character::Character(void) : _floornode(NULL)
 {
 	for (int i = 0; i < 4; i++)
 		_inventory[i] = NULL;
@@ -72,7 +85,7 @@ Character::Character(void) : _index(0), _floornode(NULL)
 	return;
 }
 
-Character::Character(std::string name) : _name(name), _index(0), _floornode(NULL)
+Character::Character(std::string name) : _name(name), _floornode(NULL)
 {
 	for (int i = 0; i < 4; i++)
 		_inventory[i] = NULL;
@@ -91,27 +104,24 @@ Character::~Character(void)
 	while (_floornode && _floornode->next)
 	{
 		_floornode = _floornode->next;
+		delete temp->materia;
 		delete temp;
 		temp = _floornode;
 	}
 	if (_floornode)
-	delete _floornode;
+	{
+		delete _floornode->materia;
+		delete _floornode;
+	}
 	return;
 }
 
-Character::Character(const Character &src)
+Character::Character(const Character &src) : _name(src._name), _floornode(NULL)
 {
 	std::cout << "Character copy constructor called" << std::endl;
+	for (int i = 0; i < 4; i++)
+		this->_inventory[i] = NULL;
 	*this = src;
-	for (int i = 0; i < _index; i++)
-	{
-		if (this->_inventory[i])
-			delete this->_inventory[i];
-		if (src._inventory[i])
-			this->_inventory[i] = src._inventory[i]->clone();
-		else
-			this->_inventory[i] = NULL;
-	}
 }
 
 Character	&Character::operator=(const Character &rhs)
@@ -120,9 +130,10 @@ Character	&Character::operator=(const Character &rhs)
 	if (this != &rhs)
 	{
 		this->_name = rhs._name;
-		this->_index = rhs._index;
-		for (int i = 0; i < _index; i++)
+		for (int i = 0; i < 4; i++)
 		{
+			if (this->_inventory[i])
+				delete this->_inventory[i];
 			if (rhs._inventory[i])
 				this->_inventory[i] = rhs._inventory[i]->clone();
 			else

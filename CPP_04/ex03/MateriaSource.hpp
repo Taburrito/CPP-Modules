@@ -32,7 +32,6 @@ public:
 	virtual AMateria* createMateria(std::string const & type);
 
 private:
-	AMateria*	_materia;
 	AMateria*	_inventory[4];
 	int			_index;
 };
