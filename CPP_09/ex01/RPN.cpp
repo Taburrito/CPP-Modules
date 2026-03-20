@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Span.cpp                                         :+:      :+:    :+:   */
+/*   RPN.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,88 +10,96 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Span.hpp"
+#include "RPN.hpp"
 
-const char* Span::ListAlreadyFull::what() const throw()
+void	RPN::Calculate(void)
 {
-	return ("Cannot add to list: already full");
+	int	tmp;
+	std::stringstream ss(_input);
+	std::string token;
+	while (ss >> token)
+	{
+		if (token.size() > 1)
+			throw InvalidInput();
+		if (isdigit(token[0]))
+			_Tokens.push(static_cast<int>(std::strtod(token.c_str(), NULL)));
+		else
+		{
+			if (_Tokens.size() < 2)
+				throw NotEnoughNumbers();
+			tmp = _Tokens.top();
+			_Tokens.pop();
+			if (token[0] == '+')
+				_Tokens.top() += tmp;
+			else if (token[0] == '-')
+				_Tokens.top() -= tmp;
+			else if (token[0] == '*')
+				_Tokens.top() *= tmp;
+			else if (token[0] == '/')
+			{
+				if (tmp == 0)
+					throw TryingToDevideByO();
+				_Tokens.top() /= tmp;
+			}
+			else
+				throw InvalidInput();
+		}
+	}
+	if (_Tokens.size() != 1)
+		throw TooManyNumbers();
+	std::cout << _Tokens.top() << std::endl;
 }
 
-const char* Span::NotEnoughRoom::what() const throw()
+const char* RPN::InvalidInput::what() const throw()
 {
-	return ("Not enough room in list");
+	return ("Error");
 }
 
-const char* Span::NoSpanFound::what() const throw()
+const char* RPN::NotEnoughNumbers::what() const throw()
 {
-	return ("No relevent span found");
+	return ("Error");
 }
 
-void	Span::addNumber(int nb)
+const char* RPN::TooManyNumbers::what() const throw()
 {
-	if (_vec.size() < _N)
-		_vec.push_back(nb);
-	else
-		throw ListAlreadyFull();
-	return;
+	return ("Error");
 }
 
-int		Span::shortestSpan(void) const
+const char* RPN::TryingToDevideByO::what() const throw()
 {
-	if (_vec.size() <= 1)
-		throw NoSpanFound();
-
-	std::vector<int> tmp = _vec;
-	std::sort(tmp.begin(), tmp.end());
-	int ret = tmp[1] - tmp[0];
-	for (unsigned int i = 1; i < tmp.size() - 1; i++)
-		if (tmp[i + 1] - tmp[i] < ret)
-			ret = tmp[i + 1] - tmp[i];
-	return ret;
-}
-
-double		Span::longestSpan(void) const
-{
-	if (_vec.size() <= 1)
-		throw NoSpanFound();
-
-	int min = *std::min_element(_vec.begin(), _vec.end());
-	int max = *std::max_element(_vec.begin(), _vec.end());
-	double res = static_cast<double>(max) - static_cast<double>(min);
-	return (res);
-
+	return ("Error");
 }
 
 // ************************************************************************** //
 //                           Const/Dest/Copy/Assign                           //
 // ************************************************************************** //
 
-Span::Span(void) : _N(0)
+RPN::RPN(void) : _input("Default")
 {
 	return;
 }
 
-Span::Span(unsigned int N) : _N(N)
+RPN::RPN(std::string tokens_string) : _input(tokens_string)
 {
 	return;
 }
 
-Span::~Span(void)
+RPN::~RPN(void)
 {
 	return;
 }
 
-Span::Span(const Span &src) : _N(0)
+RPN::RPN(const RPN &src)
 {
 	*this = src;
 }
 
-Span	&Span::operator=(const Span &rhs)
+RPN	&RPN::operator=(const RPN &rhs)
 {
 	if (this != &rhs)
 	{
-		this->_N = rhs._N;
-		this->_vec = rhs._vec;
+		this->_Tokens = rhs._Tokens;
+		this->_input = rhs._input;
 	}
 	return (*this);
 }

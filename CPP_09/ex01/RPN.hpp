@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Span.hpp                                     :+:      :+:    :+:   */
+/*   RPN.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,53 +10,51 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __SPAN_H__
-#define __SPAN_H__
+#ifndef __RPN_H__
+#define __RPN_H__
 
 # include <iostream>
 # include <string>
-# include <vector>
+# include <queue>
+# include <stack>
 # include <algorithm>
+# include <fstream>
+# include <sstream>
+# include <ctime>
+# include <cstdlib>
 
-class Span
+class RPN
 {
 
 public:
-	Span(void);
-	Span(unsigned int N);
-	~Span(void);
-	Span(const Span &other);
-	Span &operator=(const Span &rhs);
+	RPN(void);
+	RPN(std::string tokens_string);
+	~RPN(void);
+	RPN(const RPN &other);
+	RPN &operator=(const RPN &rhs);
 
-	void	addNumber(int nb);
-	template <typename Iterator>
-	void	addNumbers(Iterator begin, Iterator end)
-	{
-		if (std::distance(begin, end) > static_cast<long>(_N - _vec.size()))
-			throw NotEnoughRoom();
-		_vec.insert(_vec.end(), begin, end);
-	}
-	int		shortestSpan(void) const;
-	double		longestSpan(void) const;
+	void	Calculate(void);
 
-	class ListAlreadyFull : public std::exception
+	class InvalidInput: public std::exception
 	{
-	public:
 		virtual const char* what() const throw();
 	};
-	class NotEnoughRoom : public std::exception
+	class NotEnoughNumbers: public std::exception
 	{
-	public:
 		virtual const char* what() const throw();
 	};
-	class NoSpanFound : public std::exception
+	class TooManyNumbers: public std::exception
 	{
-	public:
+		virtual const char* what() const throw();
+	};
+	class TryingToDevideByO: public std::exception
+	{
 		virtual const char* what() const throw();
 	};
 private:
-	std::vector<int>	_vec;
-	unsigned int		_N;
+	std::stack<int>	_Tokens;
+	std::string		_input;
+
 };
 
 #endif

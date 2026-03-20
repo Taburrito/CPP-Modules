@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Span.hpp                                     :+:      :+:    :+:   */
+/*   BitcoinExchange.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awaegaer <awaegaer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,53 +10,56 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef __SPAN_H__
-#define __SPAN_H__
+#ifndef __BITCOINEXCHANGE_H__
+#define __BITCOINEXCHANGE_H__
 
 # include <iostream>
 # include <string>
-# include <vector>
+# include <map>
 # include <algorithm>
+# include <fstream>
+# include <sstream>
+# include <ctime>
+# include <cstdlib>
 
-class Span
+class BitcoinExchange
 {
 
 public:
-	Span(void);
-	Span(unsigned int N);
-	~Span(void);
-	Span(const Span &other);
-	Span &operator=(const Span &rhs);
+	BitcoinExchange(void);
+	BitcoinExchange(std::string Filename);
+	~BitcoinExchange(void);
+	BitcoinExchange(const BitcoinExchange &other);
+	BitcoinExchange &operator=(const BitcoinExchange &rhs);
 
-	void	addNumber(int nb);
-	template <typename Iterator>
-	void	addNumbers(Iterator begin, Iterator end)
-	{
-		if (std::distance(begin, end) > static_cast<long>(_N - _vec.size()))
-			throw NotEnoughRoom();
-		_vec.insert(_vec.end(), begin, end);
-	}
-	int		shortestSpan(void) const;
-	double		longestSpan(void) const;
+	void	ShowExchangeResult(void) const;
 
-	class ListAlreadyFull : public std::exception
+	class InvalidInputFormat : public std::exception
 	{
-	public:
 		virtual const char* what() const throw();
 	};
-	class NotEnoughRoom : public std::exception
+	class InvalidDataFormat : public std::exception
 	{
-	public:
 		virtual const char* what() const throw();
 	};
-	class NoSpanFound : public std::exception
+	class NumberIsNegative : public std::exception
 	{
-	public:
+		virtual const char* what() const throw();
+	};
+	class NumberIsTooBig : public std::exception
+	{
 		virtual const char* what() const throw();
 	};
 private:
-	std::vector<int>	_vec;
-	unsigned int		_N;
+	std::map<std::string, float>	_BtcRates;
+	std::string						_FileName;
+
+	void	isInputLineValid(std::string file_content) const;
+	void	isDataLineValid(std::string file_content) const;
+	void	parseInputLine(std:: string content_line);
+	bool	isFloat(std::string literal) const;
+	float	isNbValid(std::string content_line) const;
+
 };
 
 #endif
